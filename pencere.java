@@ -1,22 +1,60 @@
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Random;
 
 import javax.swing.JFrame;
 
-public class pencere extends JFrame {
+public class pencere extends JFrame implements MouseListener {
 
 	private Random rnd;
-	
+	private int x1,y1,x2,y2;
 	public pencere() {
 		super();
 		rnd= new Random();
+		addMouseListener(this);
+		x1=0;
+		x2=0;
+		y1=0;
+		y2=0;
 	}
 	
 	public void paint(Graphics g) {
 		super.paint(g);
-		for(int i=0;i<1000;i+=3) {
-			g.drawLine( rnd.nextInt(640), rnd.nextInt(480),i, i+5);
-		}
+		
+			g.drawLine(x1, y1,x2,y2);
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		x1=e.getX();
+		y1=e.getY();
+		repaint();
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
 
