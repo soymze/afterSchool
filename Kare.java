@@ -1,4 +1,4 @@
-package ders60;
+package ders61;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.Area;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
@@ -42,7 +43,7 @@ public class Kare extends JPanel implements ActionListener,KeyListener{
 			double hizd=0.0001;
 			
 			double aci=0;
-			int uzunluk= 150;
+			int uzunluk= 30;
 			
 			public Kare() {
 				time.start();
@@ -149,6 +150,7 @@ public class Kare extends JPanel implements ActionListener,KeyListener{
 				else if(e.getKeyCode()==KeyEvent.VK_N) {
 					rastgeleKareEkle();
 				}
+				kareKontrol();
 			}
 
 			private void ilerle() {
@@ -195,6 +197,26 @@ public class Kare extends JPanel implements ActionListener,KeyListener{
 				kareler.add(yeniRastgeleKare);
 			}
 			
+			private void kareKontrol() {
+				
+				int indeks=0;
+				Area anaAlan = new Area(anaKare);
+				Area kopyaAnaAlan, karelerAlan;
+				
+				while(kareler.size()>indeks) {
+					kopyaAnaAlan= (Area) anaAlan.clone();
+					karelerAlan = new Area(kareler.get(indeks));
+					kopyaAnaAlan.intersect(karelerAlan);
+					if(!kopyaAnaAlan.isEmpty()) {
+						uzunluk+=3;
+						kareler.remove(indeks);
+						indeks--;
+					}
+					indeks++;
+				}
+				
+			}
+			
 			@Override
 			public void keyReleased(KeyEvent e) {
 				// TODO Auto-generated method stub
@@ -202,4 +224,3 @@ public class Kare extends JPanel implements ActionListener,KeyListener{
 			}
 
 	}
-
