@@ -12,6 +12,12 @@ public class pazarListesi {
 		sinir= elemanKapasitesi;
 	}
 	
+	public void yaz() {
+		for(int i=0;i<elemanSayisi;i++) {
+			System.out.println(liste[i]);
+		}
+	}
+	
 	public void listeyeEkle(String eklenecekOlan)
 	{
 		if(elemanSayisi<sinir) {
@@ -24,30 +30,20 @@ public class pazarListesi {
 		}		
 	}
 	
-	public void yaz() {
-		for(int i=0;i<elemanSayisi;i++) {
-			System.out.println(liste[i]);
-		}
-	}
-	public void bastansil(){ 
-			
-			for (int i=0;i<elemanSayisi;i++) {
-				elemanSayisi--;
-				liste[i]=liste[i+1];
+	public void sil(int index) {
+		for (int i=index;i<elemanSayisi-1;i++) {
+			liste[i]=liste[i+1];
 			}
-				
+		elemanSayisi--;
 		}
+	public void ekle(int index, String eklenecekEleman) {
+		String tmp;
+		elemanSayisi++;
+		for (int i=index;i<elemanSayisi;i++) {
 			
-			
-	public void sondanSil() {
-				
-				if(elemanSayisi>0) {
-					liste[elemanSayisi]=" ";
-					elemanSayisi--;
-						}
-				else {
-					System.out.println("Liste zaten boş..");
-					}
-				}
+			tmp=liste[index];
+			liste[index]=eklenecekEleman;			
+			eklenecekEleman=tmp;
+			}
 	}
-
+}
