@@ -40,6 +40,11 @@ public class Resim extends JPanel implements ActionListener {
 		if(resimyuklu)
 		g.drawImage(boyGor,0,0,null);
 	}
+	
+	public void blur(int komsular, double benzemeOranı) {
+		
+	}
+	
 	public void boyutlandır(boolean buyut) {
 		if(resimyuklu) {
 			int kat=2;
