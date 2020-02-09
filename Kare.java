@@ -1,158 +1,117 @@
+package ders58;
+
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
-public class Kare extends JPanel implements MouseListener,MouseMotionListener{
+public class Kare extends JPanel implements ActionListener,KeyListener{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-    
 	
-	String yazi= "  ";
-    ArrayList<Rectangle> kare;
-    
-    Rectangle solUst, solAlt, sagUst, sagAlt;
-    int boyK= 5;
-    
-	Rectangle seciliKare= null;
-    Point nokta;
-    
-    double farkX,farkY;
-    
-    public Kare() {
-	kare = new ArrayList<Rectangle>();
-	kare.add(new Rectangle(10,10,30,30));
-	kare.add(new Rectangle(40,40,30,30));
-	kare.add(new Rectangle(110,10,30,30));
-	kare.add(new Rectangle(10,330,30,30));
-	}
-	
-	public void paint(Graphics g) {
-		super.paint(g);
-		//g.drawString(yazi,20,20);
 		
-		Iterator<Rectangle> it = kare.iterator();
-		Rectangle r;
-		while(it.hasNext()){
-			r= it.next();
-			if(seciliKare != null && r.equals(seciliKare)) {
-				g.setColor(Color.RED);
-				g.fillRect(r.x, r.y, r.width, r.height);
-				g.setColor(Color.BLACK);
+			 
+			Timer time = new Timer(1,this);
+			
+			int pencerex= 640;
+			int pencerey= 480;
+			
+			int yarix= pencerex/2;
+			int yariy= pencerey/2;
+			
+			int i=0;
+			int j=0;
+			
+			int i1,i2,i3,i4;
+			int j1,j2,j3,j4;
+			
+			double hiz=0.0010;
+			double hizd=0.0001;
+			
+			double aci=0;
+			int uzunluk= 150;
+			
+			public Kare() {
+				time.start();
 			}
-			else {
-				g.fillRect(r.x, r.y, r.width, r.height);
+			
+			@Override
+			public void paint(Graphics g) {
+				
+				super.paint(g);
+				g.setColor(new Color(220,220,220));
+				g.drawLine(0, yariy, pencerex, yariy);
+				g.drawLine(yarix, 0, yarix, pencerey);
+				
+				g.setColor(new Color(255,100,150));
+				g.drawLine(i1, j1, i2, j2);
+				g.drawLine(i2, j2, i3, j3);
+				g.drawLine(i3, j3, i4, j4);
+				g.drawLine(i4, j4, i1, j1);
 			}
-		}
-		if(sagUst!= null && sagAlt!= null && solUst!= null && solAlt!= null) {
-			g.setColor(Color.BLUE);
-			g.fillRect(sagUst.x, sagUst.y, sagUst.width, sagUst.height);
-			g.fillRect(sagAlt.x, sagAlt.y, sagAlt.width, sagAlt.height);
-			g.fillRect(solAlt.x, solAlt.y, solAlt.width, solAlt.height);
-			g.fillRect(solUst.x, solUst.y, solUst.width, solUst.height);
-			g.setColor(Color.BLACK);
-			
-		}
-	}
-	
-	public static void main(String[] args) {
-		JFrame frame= new JFrame ("Kareler");
-		Kare panel = new Kare();
-		panel.addMouseMotionListener(panel);
-		panel.addMouseListener(panel);
-		frame.add(panel);
-		
-		frame.setSize(640,480);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
 
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		if(seciliKare !=null) {
-			nokta= (Point) e.getPoint().clone();
-			nokta.setLocation((nokta.getX()-farkX),(nokta.getY()-farkY));
-			seciliKare.setLocation(nokta);
-			
-			solUst= new Rectangle((int)seciliKare.getX()-boyK,(int)seciliKare.getY()-boyK,boyK,boyK);
-			sagUst= new Rectangle((int)seciliKare.getX()+(int)seciliKare.getWidth(),(int)seciliKare.getY()-boyK,boyK,boyK);
-			solAlt= new Rectangle((int)seciliKare.getX()-boyK,(int)seciliKare.getY()+(int)seciliKare.getHeight(),boyK,boyK);
-			sagAlt= new Rectangle((int)seciliKare.getX()+(int)seciliKare.getWidth(),(int)seciliKare.getY()+(int)seciliKare.getHeight(),boyK,boyK);
-			
-			
-			repaint();
-			return;
-		}
-		
-	}
-	
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		yazi= e.toString();
-		repaint();
-		
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		
-		
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		Iterator<Rectangle> it = kare.iterator();
-		Rectangle r;
-		while(it.hasNext()){
-			r= it.next();
-			if(r.contains(e.getPoint())){
-				seciliKare= r;
+			public static void main(String[] args) {
+				// TODO Auto-generated method stub
+				JFrame frame = new JFrame();
+				frame.setVisible(true);
+				frame.setSize(640, 480);
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				
-				farkX= e.getX()-seciliKare.getX();
-				farkY= e.getY()-seciliKare.getY();
-							
 				
+				Kare kare = new Kare();
+				frame.add(kare);
+				frame.addKeyListener(kare);
+				
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				i1= yarix+(int)(uzunluk*Math.cos(aci));
+				j1= yariy-(int)(uzunluk*Math.sin(aci));
+				
+				i2= yarix+(int)(uzunluk*Math.cos(aci+(0.50*Math.PI)));
+				j2= yariy-(int)(uzunluk*Math.sin(aci+(0.50*Math.PI)));
+				
+				i3= yarix+(int)(uzunluk*Math.cos(aci+(1*Math.PI)));
+				j3= yariy-(int)(uzunluk*Math.sin(aci+(1*Math.PI)));
+				
+				i4= yarix+(int)(uzunluk*Math.cos(aci+(1.50*Math.PI)));
+				j4= yariy-(int)(uzunluk*Math.sin(aci+(1.50*Math.PI)));
+				
+				aci = aci + (hiz * Math.PI);
 				repaint();
-				return;
 			}
-		}
-		seciliKare=null;
-		repaint();
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getKeyCode()==KeyEvent.VK_LEFT) {
+					hiz-=hizd;
+				}
+				else if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
+					hiz+=hizd;
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
 	}
 
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		sagAlt=null;
-		sagUst=null;
-		solAlt=null;
-		solUst=null;
-		repaint();
-	}
 
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-}
