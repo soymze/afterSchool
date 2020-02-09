@@ -1,0 +1,11 @@
+
+public class ders5 {
+	public static void main (String args[])
+	{
+		System.out.println("Sonuç=	" +	carpbol(6,5,3));
+		}
+	static int carpbol (int carpan, int carpilan, int bolen)
+	{
+		return (carpan*carpilan)/bolen;
+	}
+}
