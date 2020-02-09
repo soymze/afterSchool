@@ -1,0 +1,22 @@
+import java.awt.Graphics;
+import java.util.Random;
+
+import javax.swing.JFrame;
+
+public class pencere extends JFrame {
+
+	private Random rnd;
+	
+	public pencere() {
+		super();
+		rnd= new Random();
+	}
+	
+	public void paint(Graphics g) {
+		super.paint(g);
+		for(int i=0;i<1000;i+=3) {
+			g.drawLine( rnd.nextInt(640), rnd.nextInt(480),i, i+5);
+		}
+	}
+}
+
