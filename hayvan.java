@@ -1,7 +1,18 @@
 
 public class hayvan {
 
-int yas;
+	int yas;
+	String isim;
+	
+	public int islemYap(int a,int b) {
+		System.out.println(a + "*" + (b+3));
+		return a*(b+8);
+	}
+	
+	public hayvan(String isim, int yas) {
+		this.isim=isim;
+		this.yas=yas;
+	}
 	
 	public void yuru() {
 	System.out.println("Yürüyorum..");	
@@ -15,4 +26,3 @@ int yas;
 		System.out.println("Ben bir hayvanım.");
 	}
 }
-
