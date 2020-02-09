@@ -1,0 +1,48 @@
+import java.util.Scanner;
+
+public class ders11 {
+
+	public static void main(String[] args) {
+		
+		menuGoster();
+		
+	}
+	public static void menuGoster()
+	{
+		int x=0;
+		Scanner sc = new Scanner(System.in);
+		
+		while(x!=4)
+		{
+			System.out.println("1. Ara");
+			System.out.println("2. Kaydet");
+			System.out.println("3. Yükle");
+			System.out.println("4. Çıkış");
+			System.out.println("Seçenek	:	");
+			
+			x=sc.nextInt();
+			
+			if(x==1)
+			{
+				System.out.println("Arama işlemi tamamlandı..");
+			}
+			else if(x==2)
+			{
+				System.out.println("Kaydetme işlemi tamamlandı..");
+			}
+			else if(x==3)
+			{
+				System.out.println("Yükleme işlemi tamamlandı..");
+			}
+			else if(x==4)
+			{
+				System.out.println("ÇIKIŞ YAPILIYOR!!!");
+			}
+			else
+			{
+				System.out.println("Geçersiz girdi girdiniz...");
+			}
+		}
+	}
+
+}
