@@ -1,23 +1,26 @@
 
-public class Birinci implements Runnable{
+public class Birinci  implements Runnable{
 
-	private int sayi= 0;
+	Islem birimIslem;
 	
-	public Birinci() {
-		
+	public Birinci(Islem gelenIslem) {
+		birimIslem= gelenIslem;
 	}
 
-	@Override
 	public void run() {
-		while(sayi<10) {
-		System.out.println("İleri x:  "+sayi);
-		sayi++;
-		try {
-			Thread.sleep(100);
+		while(!birimIslem.isTamamlandi()) {
+			long baslangic = System.currentTimeMillis();
+			try {
+				System.out.println("İşlem sonucu hazır değil.Sistem beklemede...");
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			long bitis= System.currentTimeMillis();
+			System.out.println("Uyku süresi: " +(bitis-baslangic));
 		}
-	}	
+		System.out.println("İşlem sonucu hazır. Sonuç:"  +birimIslem.getSonuc());
+	}
+
 }
