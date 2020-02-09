@@ -13,7 +13,7 @@ import javax.swing.Timer;
 
 public class Resim extends JPanel implements ActionListener {
 	
-	BufferedImage gorsel,modGor;
+	BufferedImage gorsel,modGor,boyGor;
 	Timer t = new Timer(20,this);
 	int sinir=0;
 	boolean art=true;
@@ -25,7 +25,7 @@ public class Resim extends JPanel implements ActionListener {
 		try {
 			gorsel=ImageIO.read(new File("SmbTEk.jpg"));
 			resimyuklu=true;
-			t.start();
+			//t.start();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -38,7 +38,32 @@ public class Resim extends JPanel implements ActionListener {
 	public void paint(Graphics g) {
 		super.paint(g);
 		if(resimyuklu)
-		g.drawImage(modGor,0,0,null);
+		g.drawImage(boyGor,0,0,null);
+	}
+	public void boyutlandır(boolean buyut) {
+		if(resimyuklu) {
+			int kat=2;
+			
+			int maxX=gorsel.getWidth();
+			int maxY=gorsel.getHeight();
+			
+			int maxXYeni= maxX*kat;
+			int maxYYeni= maxY*kat;
+			BufferedImage yeniGorsel = new BufferedImage(maxXYeni,maxYYeni,gorsel.getType());
+			Color c1,c2;
+			
+			for(int i=0;i<maxXYeni;i++) {
+				for(int j=0;j<maxYYeni;j++) {
+					
+					c1=new Color (gorsel.getRGB(i/kat, j/kat));
+					
+					yeniGorsel.setRGB(i, j, c1.getRGB());
+					
+				}
+			}
+			boyGor= yeniGorsel;
+		}
+		
 	}
 	
 	public void renkCikart() {
@@ -73,7 +98,8 @@ public class Resim extends JPanel implements ActionListener {
 		// TODO Auto-generated method stub
 		Resim r = new Resim();
 		r.resimYukle();
-		r.resimKopyala();
+		//r.resimKopyala();
+		r.boyutlandır(true);
 		JFrame frame = new JFrame();
 		frame.add(r);
 		
