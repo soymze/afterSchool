@@ -8,4 +8,9 @@ public class fenOgr extends ogr {
 	public void bil() {
 	System.out.println("Bildim");
 	}
+	@Override
+	public void bolumSoyle() {
+		// TODO Auto-generated method stub
+		System.out.println("Benim bölümüm Fen");
+	}
 }

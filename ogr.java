@@ -1,5 +1,6 @@
 
 public abstract class ogr {
+
 	private String isim;
 	private int no;
 	public String getIsim() {
@@ -20,6 +21,7 @@ public abstract class ogr {
 		this.no = no;
 	}
 	
+	public abstract void bolumSoyle();
 
 	public void adSoyle() {
 		System.out.println("Adım	:" +isim);
