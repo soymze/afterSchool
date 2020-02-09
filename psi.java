@@ -1,6 +1,5 @@
 
-public class psi extends ogr {
-
+public class psi extends ogr implements ciz {
 	public psi(String isim, int no) {
 		super(isim, no);
 		// TODO Auto-generated constructor stub
@@ -12,4 +11,9 @@ public class psi extends ogr {
 		System.out.println("Benim bölümüm Psikoloji");
 	}
 
+	@Override
+	public void cizSimdi() {
+		System.out.println("Bıktım artık..");
+		
+	}
 }

@@ -1,6 +1,5 @@
 
 public abstract class ogr {
-
 	private String isim;
 	private int no;
 	public String getIsim() {
