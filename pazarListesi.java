@@ -21,12 +21,33 @@ public class pazarListesi {
 		else
 		{
 			System.out.println("Boş yer kalmadı..");
-		}
-		
+		}		
 	}
+	
 	public void yaz() {
 		for(int i=0;i<elemanSayisi;i++) {
 			System.out.println(liste[i]);
 		}
 	}
-}
+	public void bastansil(){ 
+			
+			for (int i=0;i<elemanSayisi;i++) {
+				elemanSayisi--;
+				liste[i]=liste[i+1];
+			}
+				
+		}
+			
+			
+	public void sondanSil() {
+				
+				if(elemanSayisi>0) {
+					liste[elemanSayisi]=" ";
+					elemanSayisi--;
+						}
+				else {
+					System.out.println("Liste zaten boş..");
+					}
+				}
+	}
+
