@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -20,7 +21,14 @@ public class Kare extends JPanel implements MouseListener,MouseMotionListener{
 	
 	String yazi= "  ";
     ArrayList<Rectangle> kare;
+    
+    Rectangle solUst, solAlt, sagUst, sagAlt;
+    int boyK= 5;
+    
 	Rectangle seciliKare= null;
+    Point nokta;
+    
+    double farkX,farkY;
     
     public Kare() {
 	kare = new ArrayList<Rectangle>();
@@ -47,6 +55,15 @@ public class Kare extends JPanel implements MouseListener,MouseMotionListener{
 				g.fillRect(r.x, r.y, r.width, r.height);
 			}
 		}
+		if(sagUst!= null && sagAlt!= null && solUst!= null && solAlt!= null) {
+			g.setColor(Color.BLUE);
+			g.fillRect(sagUst.x, sagUst.y, sagUst.width, sagUst.height);
+			g.fillRect(sagAlt.x, sagAlt.y, sagAlt.width, sagAlt.height);
+			g.fillRect(solAlt.x, solAlt.y, solAlt.width, solAlt.height);
+			g.fillRect(solUst.x, solUst.y, solUst.width, solUst.height);
+			g.setColor(Color.BLACK);
+			
+		}
 	}
 	
 	public static void main(String[] args) {
@@ -65,12 +82,22 @@ public class Kare extends JPanel implements MouseListener,MouseMotionListener{
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		if(seciliKare !=null) {
-			seciliKare.setLocation(e.getPoint());
+			nokta= (Point) e.getPoint().clone();
+			nokta.setLocation((nokta.getX()-farkX),(nokta.getY()-farkY));
+			seciliKare.setLocation(nokta);
+			
+			solUst= new Rectangle((int)seciliKare.getX()-boyK,(int)seciliKare.getY()-boyK,boyK,boyK);
+			sagUst= new Rectangle((int)seciliKare.getX()+(int)seciliKare.getWidth(),(int)seciliKare.getY()-boyK,boyK,boyK);
+			solAlt= new Rectangle((int)seciliKare.getX()-boyK,(int)seciliKare.getY()+(int)seciliKare.getHeight(),boyK,boyK);
+			sagAlt= new Rectangle((int)seciliKare.getX()+(int)seciliKare.getWidth(),(int)seciliKare.getY()+(int)seciliKare.getHeight(),boyK,boyK);
+			
+			
 			repaint();
+			return;
 		}
 		
 	}
-
+	
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		yazi= e.toString();
@@ -93,6 +120,11 @@ public class Kare extends JPanel implements MouseListener,MouseMotionListener{
 			r= it.next();
 			if(r.contains(e.getPoint())){
 				seciliKare= r;
+				
+				farkX= e.getX()-seciliKare.getX();
+				farkY= e.getY()-seciliKare.getY();
+							
+				
 				repaint();
 				return;
 			}
@@ -104,7 +136,11 @@ public class Kare extends JPanel implements MouseListener,MouseMotionListener{
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+		sagAlt=null;
+		sagUst=null;
+		solAlt=null;
+		solUst=null;
+		repaint();
 	}
 
 	@Override
