@@ -1,1 +1,42 @@
 
+
+public class ders26 {
+
+	public static void main(String[] args) {
+		
+		kedi k = new kedi();
+		k.yuru();
+		k.yas=23;
+		kopek a = new kopek();
+		a.yuru();
+		a.yas=43;
+		
+		k.yasSoyle();
+		a.yasSoyle();
+	}
+
+}
+
+
+public class hayvan {
+	
+	int yas;
+	
+	public void yuru() {
+	System.out.println("Yürüyorum..");	
+	}
+	
+	public void yasSoyle() {
+		System.out.println(yas+ "	yaşındayım..");
+	}
+}
+
+
+public class kedi extends hayvan {
+
+}
+
+
+public class kopek extends hayvan {
+
+}
