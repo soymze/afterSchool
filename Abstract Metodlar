@@ -1,1 +1,106 @@
 
+
+public class ders31 {
+
+	public static void main(String[] args) {
+		
+		ogr o1= new fenOgr("Ali",2);
+		ogr o2= new matOgr("Tuğçe",3);
+		ogr o3= new psi("Aleyna",4);
+		
+		o1.adSoyle();
+		o2.adSoyle();
+
+		((fenOgr) o1).bil();
+		((matOgr) o2).hesapla();
+
+		o1.bolumSoyle();
+		o2.bolumSoyle();
+		o3.bolumSoyle();
+	}
+
+}
+
+
+public class fenOgr extends ogr {
+
+	public fenOgr(String isim, int no) {
+		super(isim,no);
+		// TODO Auto-generated constructor stub
+	}
+	public void bil() {
+	System.out.println("Bildim");
+	}
+	@Override
+	public void bolumSoyle() {
+		// TODO Auto-generated method stub
+		System.out.println("Benim bölümüm Fen");
+	}
+}
+
+
+public class matOgr extends ogr {
+
+	public matOgr(String isim, int no) {
+		super(isim,no);
+		
+	}
+
+	public void hesapla() {
+		System.out.println("Hesapladım");
+	}
+
+	@Override
+	public void bolumSoyle() {
+		// TODO Auto-generated method stub
+		System.out.println("Benim bölümüm Mat");
+
+	}
+
+}
+
+
+public abstract class ogr {
+
+	private String isim;
+	private int no;
+	public String getIsim() {
+		return isim;
+	}
+	public void setIsim(String isim) {
+		this.isim = isim;
+	}
+	public int getNo() {
+		return no;
+	}
+	public void setNo(int no) {
+		this.no = no;
+	}
+	public ogr(String isim, int no) {
+		
+		this.isim = isim;
+		this.no = no;
+	}
+	
+	public abstract void bolumSoyle();
+
+	public void adSoyle() {
+		System.out.println("Adım	:" +isim);
+	}
+}
+
+
+public class psi extends ogr {
+
+	public psi(String isim, int no) {
+		super(isim, no);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void bolumSoyle() {
+		// TODO Auto-generated method stub
+		System.out.println("Benim bölümüm Psikoloji");
+	}
+
+}
