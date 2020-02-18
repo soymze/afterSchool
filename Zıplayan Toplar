@@ -1,1 +1,257 @@
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Insets;
+import java.awt.image.BufferedImage;
+
+import javax.swing.JFrame;
+
+public class DersBir extends JFrame{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	int pencereBoyutx=640;
+	int pencereBoyuty=480;
+
+	int x=10;
+	int y=10;
+	
+	Insets icKisim;
+	
+	BufferedImage gorselBuffer;
+	
+	int hedefFps= 200;
+	boolean oyunDevam=true;
+	
+	fizikMotoru fm= new fizikMotoru();
+	int topSayisi=100;
+	
+	public static void main(String[] args) {
+		DersBir oyun = new DersBir();
+		oyun.dongu();
+		
+
+	}
+	long fpsYazdirmaZamani=0;
+	int mevcutFps=0;
+	
+	private void dongu() {
+				baslangic();
+				
+				long oncekiDonguBaslangici= System.nanoTime();
+				long hedefDonguZamani=1000000000/hedefFps;
+				
+				//Döngü başlar
+				while(oyunDevam) {
+					
+				long donguBaslangici=System.nanoTime();
+				long donguZamani= donguBaslangici-oncekiDonguBaslangici;
+								
+				
+				oncekiDonguBaslangici=donguBaslangici;
+				
+				double zamanDegiskeni= (double)donguZamani/(double)hedefDonguZamani;
+				
+				mevcutFps++;
+				fpsYazdirmaZamani=fpsYazdirmaZamani+donguZamani;
+				
+				if(fpsYazdirmaZamani>=1000000000) {
+					System.out.println("FPS : " +mevcutFps);
+					fpsYazdirmaZamani=0;
+					mevcutFps=0;
+				}
+				
+				//Update
+				oyunMantigiGuncelle(zamanDegiskeni);
+				
+				//Render
+				oyunGrafigiGuncelle();
+				long artanNano=hedefDonguZamani-(System.nanoTime()-donguBaslangici);
+				try {
+					if(artanNano>0) {
+					Thread.sleep(artanNano/1000000);
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					}
+				}
+	}
+	
+	private void oyunGrafigiGuncelle() {
+		
+		Graphics frameGrafigi=getGraphics();
+		
+		Graphics bufferGrafigi=gorselBuffer.getGraphics();
+		
+		//Buffer'ı güncelle
+		bufferGrafigi.setColor(Color.WHITE);
+		bufferGrafigi.fillRect(0, 0, pencereBoyutx, pencereBoyuty);
+		
+		bufferGrafigi.setColor(Color.BLACK);
+		fm.ekranaCiz(bufferGrafigi);
+
+		
+		//Buffer'ı Frame'e çiz
+		frameGrafigi.drawImage(gorselBuffer,icKisim.left,icKisim.top,this);
+		
+		repaint();
+	}
+
+	private void oyunMantigiGuncelle(double zamanDegiskeni) {
+			fm.guncelle(zamanDegiskeni);		
+	}
+
+	private void baslangic() {
+		setTitle("İlk Döngü");		
+		setResizable(false);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+		
+		icKisim = getInsets();
+		
+		setSize(icKisim.left+pencereBoyutx+icKisim.right,icKisim.top+pencereBoyuty+icKisim.bottom);
+		
+		gorselBuffer = new BufferedImage(pencereBoyutx, pencereBoyuty, BufferedImage.TYPE_INT_RGB);
+	
+	double boyut = Math.random()*50;
+		for(int i= 0; i<topSayisi; i++) {
+		fm.elemanEkle(new top(Math.random()*640,
+				Math.random()*300,
+				Math.random()*10,
+				Math.random()*10, 
+				boyut+i/2,
+				boyut+i/2,
+				boyut+i/2));
+
+		}
+	}
+}
+
+import java.awt.Graphics;
+
+public abstract class FizikElemani {
+
+	double x=0;
+	double y=0;
+	
+	double vx= 0;
+	double vy=0;
+	
+	double w=0;
+	double h=0;
+	
+	double m=0;
+
+	public abstract void ekranaCiz(Graphics g);
+	
+	public FizikElemani(double x,double y, double vx, double vy,double w, double h,double m) {
+		super();
+		this.x= x;
+		this.y= y;
+		this.vx= vx;
+		this.vy= vy;
+		this.w= w;
+		this.h= h;
+		this.m= m;
+	}
+}
+
+import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class fizikMotoru {
+
+	ArrayList <FizikElemani> elemanlar;
+
+	private double g= 0.3;
+	private double hizSiniri= 0.001;
+	double enerjiKat = 0.2;
+	
+	
+	int maxX = 640;
+	int maxY = 480;
+	int minX = 0;
+	int minY = 0;
+	
+	public fizikMotoru() {
+		elemanlar = new ArrayList <FizikElemani>();
+	}
+	
+	public void elemanEkle(FizikElemani gelenEleman) {
+		elemanlar.add(gelenEleman);
+	}
+	
+	public void ekranaCiz(Graphics g) {
+		Iterator <FizikElemani> it = elemanlar.iterator();
+		while(it.hasNext()) {
+			FizikElemani e = it.next();
+			e.ekranaCiz(g);
+		}
+	}
+	public void guncelle(double katSayi) {
+		
+		Iterator <FizikElemani> it = elemanlar.iterator();
+		while(it.hasNext()) {
+			FizikElemani e = it.next();
+			e.x= e.x + e.vx * katSayi;
+			e.y= e.y + e.vy * katSayi;
+		
+			// Y ekseni hareket	
+		if(e.y > maxY - e.h) {
+			e.vy= e.vy - (e.m*katSayi)* enerjiKat;
+			e.y= maxY - e.h;
+			if(e.vy < hizSiniri) {
+				e.vy= 0 ;
+				e.vx = e.vx * 0.9;
+			}
+			else {
+			e.vy= e.vy - g * katSayi;
+			e.vy=-e.vy;	
+			}
+			
+		}
+		
+		else if (e.y < minY) {
+			e.vy = e.vy - g * katSayi;
+			e.vy = -e.vy;
+		}
+		
+		else {
+			e.vy= e.vy + g * katSayi;
+		}
+		
+		//X ekseni hareket
+		if(e.x > maxX - e.w) {
+			e.vx= e.vx - (e.m*katSayi)* enerjiKat;
+			e.x= maxX - e.h;
+			e.vx=-e.vx;
+		}
+		else if(e.x < minX) {
+			e.vx= e.vx - (e.m*katSayi)*0.2;
+			if(e.vx > -hizSiniri) {
+				e.vx= 0 ;
+			}
+			e.x= minX;
+			e.vx=-e.vx;
+			}		
+		}
+	}
+}
+
+import java.awt.Graphics;
+
+public class top extends FizikElemani {
+	
+	public top(double x, double y, double vx, double vy, double w, double h, double m) {
+		super(x, y, vx, vy, w, h, m);
+		// TODO Auto-generated constructor stub
+	}	
+
+	public void ekranaCiz(Graphics g) {
+		g.drawOval((int)x,(int)y,(int)w,(int)h);
+	}
+}
