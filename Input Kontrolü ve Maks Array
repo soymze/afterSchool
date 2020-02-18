@@ -1,1 +1,40 @@
 
+import java.util.Random;
+import java.util.Scanner;
+
+public class ders20 {
+
+	public static void main(String[] args) {
+		
+		Scanner sc  = new Scanner(System.in);
+		int dizi[] = new int[6]; 
+		int enBuyuk,enKucuk;
+			enBuyuk=dizi[0];
+			enKucuk=dizi[0];
+		System.out.println("--Oluşturulan Dizi--");
+		for(int i=0;i<6;i++) {
+		Random r=new Random(); 
+		   int a=r.nextInt(1000);
+		   dizi[i]=a;
+		   System.out.println(	(i+1)+".Eleman	="	+dizi[i]);
+		   }
+		for(int i=0;i<6;i++) {
+			if(dizi[i]>enBuyuk) {
+			enBuyuk=dizi[i];	
+			}
+		}
+		System.out.println("En Büyük Eleman	="	+enBuyuk);
+	}
+}
+
+
+public class enBuyuk {
+	
+	public enBuyuk(int i) {
+		
+	}
+
+	int[] enBuyuk;
+	
+
+}
