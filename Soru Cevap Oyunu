@@ -1,1 +1,159 @@
 
+import javax.swing.JFrame;
+
+public class soru {
+
+public static class Soru {
+		
+		String soruMetni;
+		String secenekA,secenekB,secenekC,secenekD;
+		
+		public enum Cevap {CEVAP_A,CEVAP_B,CEVAP_C,CEVAP_D,}
+		
+		Cevap dogruCevap;
+		Cevap cevap;
+
+		public Soru(String soruMetni, String secenekA, String secenekB, String secenekC, String secenekD,
+				Cevap dogruCevap) {
+			super();
+			this.soruMetni = soruMetni;
+			this.secenekA = secenekA;
+			this.secenekB = secenekB;
+			this.secenekC = secenekC;
+			this.secenekD = secenekD;
+			this.dogruCevap = dogruCevap;
+			}
+			boolean cevapKontrol(Cevap cevap) {
+				if(dogruCevap == cevap) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+			public static void main(String[] args) {
+				
+				JFrame frame =new JFrame();
+				soruDeneme sd= new soruDeneme();
+				frame.add(sd);
+				frame.setVisible(true);
+				frame.setBounds(100, 100, 200, 150);
+			}
+		}
+
+}
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+
+
+
+
+
+
+
+public class soruDeneme extends JPanel implements ActionListener{
+
+	JLabel soruMetni;
+	JRadioButton cevapRadioA,cevapRadioB,cevapRadioC,cevapRadioD;
+	JButton onayButton;
+	
+	ButtonGroup cevaplarGrup;
+	
+	soru[] sorular = new soru[5];
+	int gecerliSoru=0;
+	int soruMax=3;
+	int skor=0;
+	
+	public soruDeneme() {
+		
+		//Elemanları Oluşturma 
+		
+		soruMetni = new JLabel();
+		JLabel skorLabel = new JLabel("Skor:  " +skor);
+		cevapRadioA= new JRadioButton();
+		cevapRadioA= new JRadioButton();
+		cevapRadioA= new JRadioButton();
+		cevapRadioA= new JRadioButton();
+		onayButton= new JButton();
+		
+		cevaplarGrup = new ButtonGroup();
+		
+		cevaplarGrup.add(cevapRadioA);
+		cevaplarGrup.add(cevapRadioB);
+		cevaplarGrup.add(cevapRadioC);
+		cevaplarGrup.add(cevapRadioD);
+		
+		onayButton.addActionListener(this);
+		
+		
+		add(soruMetni);
+		add(cevapRadioA);
+		add(cevapRadioB);
+		add(cevapRadioC);
+		add(cevapRadioD);
+		add(onayButton);
+		add(skorLabel);
+		
+		//Sorularla İlgili Kısım
+		
+		soruOlustur();
+		soruyuEkranaYansıt(gecerliSoru);
+	}
+	
+	public void soruOlustur() {
+		FileReader dosyaOkuyucu = new FileReader("");
+	}
+	
+	public void soruyuEkranaYansıt(int soruNo) {
+		soruMetni.setText(sorular[soruNo].soruMetni);
+		cevapRadioA.setText(sorular[soruNo].secenekA);
+		cevapRadioB.setText(sorular[soruNo].secenekB);
+		cevapRadioC.setText(sorular[soruNo].secenekC);
+		cevapRadioD.setText(sorular[soruNo].secenekD);
+	}
+	
+	public boolean cevapKontrol (soru.Cevap verilenCevap) {
+		return sorular[gecerliSoru].cevapKontrol(verilenCevap);
+	}
+	public void actionPerformed(ActionEvent e) {
+		boolean cevap;
+		
+		if(cevapRadioA.isSelected()) {
+			cevap= cevapKontrol(soru.cevap.cevap_A);
+		}
+		else if(cevapRadioB.isSelected()) {
+			cevap= cevapKontrol(soru.cevap.cevap_B);
+		}
+		else if(cevapRadioC.isSelected()) {
+			cevap= cevapKontrol(soru.cevap.cevap_C);
+		}
+		else if(cevapRadioD.isSelected()) {
+			cevap= cevapKontrol(soru.cevap.cevap_D);
+		}
+		else{
+			cevap= false;
+		}
+		
+		if(cevap) {
+			JOptionPane.showMessageDialog(this, "Doğru Bildin!");
+			skor+=10;
+			skorLabel.setText("Skor:  " + skor);
+		}
+		else {
+			JOptionPane.showMessageDialog(this, "Yanlış Cevap");
+		}
+		gecerliSoru++;
+		if(gecerliSoru < soruMax)
+		soruyuEkranaYansıt(gecerliSoru);
+		else
+			JOptionPane.showMessageDialog(this, "Oyun Bitti Skorun	:" +skor);
+	}
+
+}
