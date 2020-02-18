@@ -1,1 +1,50 @@
 
+
+public class ders8 {
+
+	public static void main(String[] args) {
+		
+		Insan i3 = new Insan(19,"Eren");
+		Insan i4 = new Insan(27,"Beytullah");
+		i3.sayHiTo(i4);
+		i4.sayHiTo(i3);
+
+	}
+
+}
+
+
+public class Insan {
+	private String isim;
+	private int yas;
+	
+	public void sayHi()
+	{
+		System.out.println("Merhaba, benim adım "+isim);
+	}
+	public void sayHiTo(Insan gelenInsan)
+	{
+		System.out.println("Merhaba," +gelenInsan.getIsim()+ " benim adım " +isim+ ". Nasılsın?");
+	}
+	public Insan (int alinanYas, String alinanIsim)
+	{
+		setYas(alinanYas);
+		setIsim(alinanIsim);
+		
+	}
+	
+	public void setIsim(String isim) {
+		this.isim = isim;
+	}
+	
+	public String getIsim() {
+		return isim;
+	}	
+
+	public void setYas(int yas) {
+		this.yas = yas;
+	}
+	public int getYas() {
+		return yas;
+	}
+}
