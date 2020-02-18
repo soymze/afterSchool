@@ -1,1 +1,98 @@
 
+import javax.swing.JFrame;
+
+public class ders40 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		JFrame pencere = new JFrame("wsp");
+		yeniPanel panel1 = new yeniPanel();
+		pencere.add(panel1);
+		pencere.addKeyListener(panel1);
+		pencere.setSize(640, 480);
+		pencere.setVisible(true);
+		
+	}
+
+}
+
+import java.awt.Graphics;
+import java.awt.Rectangle;
+
+public class dortgen {
+	
+	Rectangle r;
+	
+	public dortgen(int x,int y,int width, int height) {
+		
+		r= new Rectangle(x,y,width,height);
+	}
+	
+	public void ekranCiz (Graphics g) {
+		
+		g.drawRect((int)r.getX(), (int)r.getY(), (int)r.getWidth(), (int)r.getHeight());
+	}
+	
+	public void hareketEt(int x, int y) {
+		r.setLocation((int)r.getX()+x,(int)r.getY()+y);
+	}
+}
+
+import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import javax.swing.JPanel;
+
+public class yeniPanel extends JPanel implements KeyListener{
+
+	dortgen a;
+	int adim=15;
+	
+	public yeniPanel()
+	{
+		super();
+		addKeyListener(this);
+		
+		a= new dortgen(this.getWidth()/2,this.getHeight()/2,20,20);
+	}
+	
+	protected void paintComponent(Graphics g){
+		super.paintComponent(g);
+		a.ekranCiz(g);
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getKeyCode() == e.VK_UP) {
+			a.hareketEt(0, -adim);
+			repaint();
+		}
+		else if(e.getKeyCode() == e.VK_DOWN) {
+			a.hareketEt(0, adim);
+			repaint();
+		}
+	
+		else if(e.getKeyCode() == e.VK_LEFT) {
+			a.hareketEt(-adim, 0);
+			repaint();
+		}
+		else if(e.getKeyCode() == e.VK_RIGHT) {
+			a.hareketEt(adim, 0);
+			repaint();
+		}
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+}
