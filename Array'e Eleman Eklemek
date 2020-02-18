@@ -1,1 +1,83 @@
 
+import java.util.Scanner;
+
+public class ders18 {
+
+	public static void main(String[] args) {
+		int silinecekeleman,eklenecekIndex;
+		String eklenecekeleman;
+		
+		Scanner sc  = new Scanner(System.in);
+		pazarListesi liste = new pazarListesi(10);
+		liste.listeyeEkle("Salatalık");
+		liste.listeyeEkle("Diş Macunu");
+		liste.listeyeEkle("Bisküvi");
+		liste.listeyeEkle("Kalem");
+		liste.listeyeEkle("Deodorant");
+		System.out.println("İLK HALİ:");
+		liste.yaz();
+		
+		System.out.println("Kaçıncı elemanı silmek istersiniz :");
+        silinecekeleman=sc.nextInt();
+        liste.sil(silinecekeleman-1);
+        liste.yaz();
+        
+		System.out.println("Kaçıncı sıraya eklemek istersiniz :");
+        eklenecekIndex=sc.nextInt();
+        System.out.println("Hangi elemanı eklemek istersiniz :");
+        eklenecekeleman=sc.next();
+       
+       liste.ekle(eklenecekIndex-1, eklenecekeleman);
+       liste.yaz();
+	}
+}
+
+
+public class pazarListesi {
+
+	String[] liste;
+	int elemanSayisi;
+	int sinir;
+	
+	public pazarListesi(int elemanKapasitesi)
+	{
+		liste= new String [elemanKapasitesi];
+		elemanSayisi=0;
+		sinir= elemanKapasitesi;
+	}
+	
+	public void yaz() {
+		for(int i=0;i<elemanSayisi;i++) {
+			System.out.println(liste[i]);
+		}
+	}
+	
+	public void listeyeEkle(String eklenecekOlan)
+	{
+		if(elemanSayisi<sinir) {
+			liste[elemanSayisi] = eklenecekOlan;
+			elemanSayisi++;
+		}
+		else
+		{
+			System.out.println("Boş yer kalmadı..");
+		}		
+	}
+	
+	public void sil(int index) {
+		for (int i=index;i<elemanSayisi-1;i++) {
+			liste[i]=liste[i+1];
+			}
+		elemanSayisi--;
+		}
+	public void ekle(int index, String eklenecekEleman) {
+		String tmp;
+		elemanSayisi++;
+		for (int i=index;i<elemanSayisi;i++) {
+			
+			tmp=liste[index];
+			liste[index]=eklenecekEleman;			
+			eklenecekEleman=tmp;
+			}
+	}
+}
