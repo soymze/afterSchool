@@ -1,0 +1,54 @@
+
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+import javax.swing.Timer;
+
+public class karePencere extends JFrame implements ActionListener {
+
+	int x,y;
+	int yuk, gen;
+	
+	public karePencere() {
+		super();
+		x=100;
+		y=100;
+		
+		yuk=200;
+		gen=200;
+		
+		Timer zaman = new Timer(200,this);
+		zaman.start();
+	}
+	
+	public void paint (Graphics g) {
+		super.paint(g);
+		g.drawRect(x, y, gen, yuk);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		
+			x+=5;
+			y+=5;
+			repaint();
+										
+	}
+}
+
+import javax.swing.JFrame;
+
+public class pencereDene {
+
+	public static void main(String[] args) {
+		
+		karePencere pencere =new karePencere();
+		pencere.setSize(640, 480);
+		pencere.setVisible(true);
+
+	}
+
+}
