@@ -1,0 +1,63 @@
+
+
+public class ders28 {
+
+	public static void main(String[] args) {
+		
+		kedi k = new kedi();
+		k.yuru();
+		k.yas=23;
+		kopek a = new kopek();
+		a.yuru();
+		a.yas=43;
+		
+		k.yasSoyle();
+		a.yasSoyle();
+		
+		a.sesCikar();
+		k.sesCikar();
+
+	}
+
+}
+
+
+public class hayvan {
+
+int yas;
+	
+	public void yuru() {
+	System.out.println("Yürüyorum..");	
+	}
+	
+	public void yasSoyle() {
+		System.out.println(yas+ "	yaşındayım..");
+	}
+	
+	public void sesCikar() {
+		System.out.println("Ben bir hayvanım.");
+	}
+}
+
+
+
+public class kedi extends hayvan {
+
+	@Override
+	public void sesCikar() {
+		System.out.println("Miyavv!");
+		
+	}
+
+}
+
+
+public class kopek extends hayvan {
+
+	@Override
+	public void sesCikar() {
+		System.out.println("HRRrr!");
+		
+	}
+
+}
