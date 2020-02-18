@@ -1,1 +1,82 @@
 
+
+public class bisiklet {
+
+	Insan binmisInsan;
+	
+	public void bin(Insan gelenInsan)
+	{
+		if(binmisInsan==null)
+		{
+			binmisInsan=gelenInsan;
+			System.out.println(binmisInsan.getIsim()+"	başarıyla bindi.");
+		}
+		else
+		{
+			System.out.println("Zaten " +binmisInsan.getIsim()+ " binmiş!");
+		}
+	}
+	
+	public void in()
+	{
+		if(binmisInsan==null)
+		{
+			System.out.println("Zaten bisiklet boş!");
+		}
+		else
+		{
+			System.out.println(binmisInsan.getIsim()+" başarıyla indi!");
+			binmisInsan=null;
+		}
+	}
+	
+	
+}
+
+
+public class ders9 {
+
+	public static void main(String[] args) {
+		
+		Insan i3 = new Insan(19,"Eren");
+		Insan i4 = new Insan(27,"Beytullah");
+		
+		bisiklet b1= new bisiklet();
+		
+		b1.in();
+		b1.bin(i3);
+		b1.in();
+		b1.bin(i4);
+
+	}
+
+}
+
+
+public class Insan {
+	
+	private String isim;
+	private int yas;
+	
+	public Insan (int alinanYas, String alinanIsim)
+	{
+		setYas(alinanYas);
+		setIsim(alinanIsim);
+		
+	}
+	
+	public void setIsim(String isim) {
+		this.isim = isim;
+	}
+	
+	public String getIsim() {
+		return isim;
+	}	
+
+	public void setYas(int yas) {
+		this.yas = yas;
+	}
+	public int getYas() {
+		return yas;
+	}
+}
