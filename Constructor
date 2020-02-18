@@ -1,1 +1,72 @@
 
+
+public class ders28 {
+
+	public static void main(String[] args) {
+		
+		kedi cimo = new kedi("cimi",3);
+		
+		kopek will = new kopek("will",4);
+		
+		
+		cimo.yasSoyle();
+	    will.yasSoyle();
+		
+		cimo.sesCikar();
+		will.sesCikar();
+
+	}
+
+}
+
+
+public class hayvan {
+
+	int yas;
+	String isim;
+	
+	public hayvan(String isim, int yas) {
+		this.isim=isim;
+		this.yas=yas;
+	}
+	
+	public void yuru() {
+	System.out.println("Yürüyorum..");	
+	}
+	
+	public void yasSoyle() {
+		System.out.println(yas+ "	yaşındayım..");
+	}
+	
+	public void sesCikar() {
+		System.out.println("Ben bir hayvanım.");
+	}
+}
+
+public class kedi extends hayvan {
+
+	public kedi(String isim, int yas) {
+		super(isim,yas);
+	}
+	
+	@Override
+	public void sesCikar() {
+		System.out.println("Miyavv!");
+		
+	}
+
+}
+
+public class kopek extends hayvan {
+
+	public kopek (String isim, int yas) {
+		super(isim,yas);
+	}
+	
+	@Override
+	public void sesCikar() {
+		System.out.println("HRRrr!");
+		
+	}
+
+}
