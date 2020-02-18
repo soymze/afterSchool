@@ -1,1 +1,38 @@
 
+import java.util.Random;
+
+public class ders2425 {
+
+	public static void main(String[] args) {
+		
+int dizi[] = new int[10];
+		boolean swapped = true;
+		System.out.println("---Oluşturulan Dizi---");
+		for(int i=0;i<10;i++) {
+			Random r=new Random(); 
+			   int a=r.nextInt(1000);
+			   dizi[i]=a;
+		System.out.println((i+1)+ ". Eleman	" +dizi[i]);
+		}
+		while(swapped) {
+			for(int as=1;as<10;as++) {
+		for(int s=1;s<10;s++) {
+			swapped=false;
+			if(dizi[s-1]>dizi[s]) {
+				int tmp=dizi[s-1];
+				dizi[s-1]=dizi[s];
+				dizi[s]=tmp;
+				swapped=true;			
+				}			
+			}
+		}
+	}
+System.out.println("---Düzenlenen Dizi---");
+		
+		for(int q=0;q<10;q++) {
+		System.out.println((q+1)+ ". Eleman	" +dizi[q]);
+		}
+
+	}
+
+}
