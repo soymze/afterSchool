@@ -1,1 +1,164 @@
 
+import javax.swing.JFrame;
+
+public class ders42 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		JFrame pencere = new JFrame("wsp");
+		yeniPanel panel1 = new yeniPanel();
+		pencere.add(panel1);
+		pencere.setSize(640, 480);
+		pencere.setVisible(true);
+		
+	}
+
+}
+
+import java.awt.Graphics;
+import java.awt.Rectangle;
+
+public class dortgen {
+	
+	Rectangle r;
+	int vX,vY;
+	
+	
+	public dortgen(int x,int y,int width, int height, int vX,int vY) {
+		
+		r= new Rectangle(x,y,width,height);
+		this.vX=vX;
+		this.vY=vY;
+	}
+	
+	public void ekranCiz (Graphics g) {
+		
+		g.drawRect((int)r.getX(), (int)r.getY(), (int)r.getWidth(), (int)r.getHeight());
+	}
+	
+	public void hareketEt( dortgen[] digerleri, int sayi) {
+		
+		Rectangle gecici = new Rectangle(r);
+		gecici.setLocation((int)gecici.getX()+vX,(int)gecici.getY()+vY);
+		
+		boolean cakisma=false;
+		for(int i=0;i<sayi;i++) {
+			if((!this.equals(digerleri[i])) && gecici.intersects(digerleri[i].getRectangle())) {
+				cakisma=true;
+			}
+		}
+		if (gecici.getX()<0 || gecici.getY()<0 || gecici.getX()>620-gecici.getWidth() || gecici.getY()>460-gecici.getHeight())
+		{
+			cakisma=true;
+		}
+			if(cakisma==false)	
+		r.setLocation((int)r.getX()+vX,(int)r.getY()+vY);
+			else {
+				vX=-vX;
+				vY=-vY;
+			}
+	}
+	public Rectangle getRectangle() {
+		return r;
+	}
+}
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Random;
+
+import javax.swing.JPanel;
+import javax.swing.Timer;
+
+public class yeniPanel extends JPanel implements ActionListener,MouseListener{
+
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	dortgen[] digerleri;
+	int elemanSayisi=5;
+	int adim=5;
+	Timer zaman;
+	Random random = new Random();	
+	
+	public yeniPanel()
+	{
+		super();
+		zaman = new Timer (40,this);
+		zaman.start();
+		
+		
+		digerleri = new dortgen[50];
+		digerleri[0]= new dortgen(10,10,20,20,random.nextInt(10),random.nextInt(10));
+		digerleri[1]= new dortgen(50,40,20,20,random.nextInt(10),random.nextInt(10));
+		digerleri[2]= new dortgen(220,30,20,20,random.nextInt(10),random.nextInt(10));
+		digerleri[3]= new dortgen(110,210,20,20,random.nextInt(10),random.nextInt(10));
+		digerleri[4]= new dortgen(110,110,20,20,random.nextInt(10),random.nextInt(10));
+		addMouseListener(this);
+	}
+	
+	
+			
+	protected void paintComponent(Graphics g){
+		super.paintComponent(g);
+		g.drawRect(0, 0, 620, 460);
+		for(int i= 0;i<elemanSayisi;i++) {
+			digerleri[i].ekranCiz(g);
+		}
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		for(int i= 0;i<elemanSayisi;i++) {
+		   digerleri[i].hareketEt(digerleri, elemanSayisi);
+	}
+		repaint();
+  }
+
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		digerleri[elemanSayisi]=
+				digerleri[0]= new dortgen(e.getX(),e.getY(),20,20,random.nextInt(10),random.nextInt(10));
+		elemanSayisi++;
+	}
+
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+}
