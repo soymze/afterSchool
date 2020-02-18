@@ -1,1 +1,80 @@
 
+
+public class ders29 {
+
+	public static void main(String[] args) {
+		
+		kedi cimo = new kedi("cimi",3);
+		kedi clint = new kedi("clint",7);
+		kopek will = new kopek("will",4);
+		
+		
+		System.out.println("İşlem sonucu	:" +cimo.islemYap(5, 3));
+		System.out.println("İşlem sonucu	:" +clint.islemYap(4, 2));
+		System.out.println("İşlem sonucu	:" +will.islemYap(9, 1));
+
+	}
+
+}
+
+
+public class hayvan {
+
+	int yas;
+	String isim;
+	
+	public int islemYap(int a,int b) {
+		System.out.println(a + "*" + (b+3));
+		return a*(b+8);
+	}
+	
+	public hayvan(String isim, int yas) {
+		this.isim=isim;
+		this.yas=yas;
+	}
+	
+	public void yuru() {
+	System.out.println("Yürüyorum..");	
+	}
+	
+	public void yasSoyle() {
+		System.out.println(yas+ "	yaşındayım..");
+	}
+	
+	public void sesCikar() {
+		System.out.println("Ben bir hayvanım.");
+	}
+}
+
+public class kedi extends hayvan {
+
+	public int islemYap(int sayi1,int sayi2) {
+		int sonuc= super.islemYap(sayi1, sayi2);
+		System.out.println(sonuc);
+		return sonuc*sayi1+sayi2;
+	}
+	
+	public kedi(String isim, int yas) {
+		super(isim,yas);
+	}
+	
+	@Override
+	public void sesCikar() {
+		System.out.println("Miyavv!");
+		
+	}
+
+}
+public class kopek extends hayvan {
+
+	public kopek (String isim, int yas) {
+		super(isim,yas);
+	}
+	
+	@Override
+	public void sesCikar() {
+		System.out.println("HRRrr!");
+		
+	}
+
+}
