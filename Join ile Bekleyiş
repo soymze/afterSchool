@@ -1,1 +1,80 @@
 
+
+public class sayacDene {
+
+	public sayacDene() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public static void main(String[] args) {
+		int kacDefa=20;
+		
+		sayiciIslem islem= new sayiciIslem();
+		Thread t1= new Thread(new sayici(islem,kacDefa));
+		t1.start();
+		
+		while(t1.isAlive()) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if(islem.bulduMu) {
+			System.out.println("Sonuç  :" +islem.sayi);
+		}
+	}
+
+}
+
+
+public class sayici implements Runnable {
+	boolean bulduMu= false;
+	sayiciIslem islem;
+	int kacKez;
+	
+	final int ARTTIRMA=3;
+	int kackezGecti;
+	
+	public sayici(sayiciIslem gelensayiciIslem, int gelenkacKez) {
+		islem= gelensayiciIslem;
+		kacKez= gelenkacKez;
+		
+		kackezGecti= 0;
+	}
+
+	@Override
+	public void run() {
+		while(kackezGecti<kacKez) {
+			islem.sayi=islem.sayi+ARTTIRMA;
+			kackezGecti++;
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		System.out.println("Sonuç bulundu!");
+		islem.bulduMu= true;
+	}
+
+}
+
+
+public class sayiciIslem {
+
+	int sayi;
+	boolean bulduMu;
+	
+	public sayiciIslem() {
+		sayi=0;
+		bulduMu= false;
+	}
+	public sayiciIslem(int gelenSayi) {
+		sayi=gelenSayi;
+		bulduMu= false;
+	}
+	
+}
